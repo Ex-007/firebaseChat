@@ -44,15 +44,19 @@
 
 
 
-//   SENDING MESSAGEW TO THE FIREBASE DATABASE
+//   SENDING MESSAGE TO THE FIREBASE DATABASE
 
     sendBtn.addEventListener('click', () => {
         let messageValue = textArea.value
-        let timestamp = new Date().getTime()
-        set(ref(db, 'newMessage/' + timestamp), {
-            message: messageValue,
-            sender: sender
-        })
+        if(textArea.value == ''){
+            return
+        }else{
+            let timestamp = new Date().getTime()
+            set(ref(db, 'newMessage/' + timestamp), {
+                message: messageValue,
+                sender: sender
+            })
+        }
         textArea.value = ''
         console.log(messageValue)
     
@@ -92,6 +96,7 @@ onChildAdded(ref(db, 'newMessage'), snapshot => {
     }
 });
 
+// UPDATING THE DOM AFTER A USER DELETES A MESSAGE
 onChildRemoved(ref(db, 'newMessage'), (snapshot) => {
     
     let deleteKey = snapshot.key;

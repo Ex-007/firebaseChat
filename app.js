@@ -93,17 +93,29 @@ onChildAdded(ref(db, 'newMessage'), snapshot => {
                 remove(ref(db, 'newMessage/' + deleteKey));
                 deleteEdit.style.display = 'none'
             })
-           setTimeout(() => {
+           let deleteRemove = setTimeout(() => {
                 if(deleteEdit.style.display == 'flex'){
                     deleteEdit.style.display = 'none'
+                }else{
+                    clearTimeout(deleteRemove)
                 }
            }, 5000);
+
+        // SELECTING AND DELETING MULTIPLE
+        //    window.addEventListener('click', () => {
+        //     if(deleteEdit.style.display == 'flex'){
+        //         deleteEdit.style.display = 'none'
+        //     }else{
+        //         deleteEdit.style.display = 'flex'
+        //     }
+        //    })
         });
     } else {
         let incomingText = document.createElement('li');
         incomingText.setAttribute('class', 'incomingMessages');
         incomingText.textContent = snapshot.val().sender + ' : ' + snapshot.val().message;
         incoming.appendChild(incomingText);
+        incoming.scrollTop = incoming.scrollHeight;
     }
 });
 

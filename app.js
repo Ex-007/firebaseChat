@@ -70,9 +70,10 @@ onChildAdded(ref(db, 'newMessage'), snapshot => {
     let deleteKey = snapshot.key;
 
     if (snapshot.val().sender == sender) {
+        let deleteEdit = document.getElementById('deleteEdit')
         let deleteBtn = document.createElement('span');
         deleteBtn.setAttribute('class', 'deleteBtn');
-        deleteBtn.innerHTML = '\u00d7';
+        deleteBtn.innerHTML = '\u003A';
 
         let outgoingText = document.createElement('li');
         let newDiv = document.createElement('div');
@@ -86,7 +87,17 @@ onChildAdded(ref(db, 'newMessage'), snapshot => {
         incoming.appendChild(newDiv);
 
         deleteBtn.addEventListener('click', () => {
-            remove(ref(db, 'newMessage/' + deleteKey));
+            deleteEdit.style.display = 'flex'
+            let deleteBtn = document.getElementById('deleteBtn')
+            deleteBtn.addEventListener('click', () => {
+                remove(ref(db, 'newMessage/' + deleteKey));
+                deleteEdit.style.display = 'none'
+            })
+           setTimeout(() => {
+                if(deleteEdit.style.display == 'flex'){
+                    deleteEdit.style.display = 'none'
+                }
+           }, 5000);
         });
     } else {
         let incomingText = document.createElement('li');
@@ -106,5 +117,17 @@ onChildRemoved(ref(db, 'newMessage'), (snapshot) => {
     }
 });
 
+let starBtn = document.getElementById('starBtn')
+let goBack = document.getElementById('goBack')
+let profileImage = document.getElementById('profileImage')
+let menuPop = document.getElementById('menuPop')
+let chatOwner = document.getElementById('chatOwner')
+starBtn.addEventListener('click', () => {
+    console.log('star got clicked');
+})
+let deleteBtn = document.getElementById('deleteBtn')
+deleteBtn.addEventListener('click', () => {
+    console.log('delete got clicked');
+})
 
 

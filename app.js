@@ -125,9 +125,6 @@ let chatOwner = document.getElementById('chatOwner')
 starBtn.addEventListener('click', () => {
     console.log('star got clicked');
 })
-let deleteBtn = document.getElementById('deleteBtn')
-deleteBtn.addEventListener('click', () => {
-    console.log('delete got clicked');
-})
+
 
 

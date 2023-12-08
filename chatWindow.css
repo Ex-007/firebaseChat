@@ -98,7 +98,7 @@ body{
         display: flex;
         justify-content: space-between;
         background-color: black;
-        margin: 0 5px;
+        margin: -5px;
         padding: 0 5px;
         border: 1px solid white;
         border-radius: 10px;
@@ -222,11 +222,11 @@ body{
     .heading{
         position : fixed;
         top: 0;
-        width: 98%;
+        margin: -5px;
         display: flex;
         justify-content: space-between;
         background-color: black;
-        margin: 0 5px;
+
         padding: 0 5px;
         border: 1px solid white;
         border-radius: 10px;

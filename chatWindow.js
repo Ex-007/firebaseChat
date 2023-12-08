@@ -77,7 +77,6 @@ if (localStorage.getItem("sender")) {
           })
       }
       textArea.value = ''
-      console.log(messageValue)
   
   })
 

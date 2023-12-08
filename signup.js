@@ -31,47 +31,135 @@ let PasswordIn = document.getElementById('Password')
 let signUp = document.getElementById('signUp')
 
 
-function signUpNewUser(){
-  let firstNameInput = FirstnameIn.value
-  let lastNameInput = LastnameIn.value
-  let usernameInput = usernameIn.value
-  let email = EmailIn.value
-  let dateOfBirthInput = phoneNumberIn.value
-  let password = PasswordIn.value
+// function signUpNewUser(){
+//   let firstNameInput = FirstnameIn.value
+//   let lastNameInput = LastnameIn.value
+//   let usernameInput = usernameIn.value
+//   let email = EmailIn.value
+//   var dateOfBirthInput = phoneNumberIn.value
+//   let password = PasswordIn.value
 
-  createUserWithEmailAndPassword(auth, email, password)
-  .then(credentials => {
-      alert('User Created. Waiting for Redirect')
-      let userId = credentials.user.uid
+//   createUserWithEmailAndPassword(auth, email, password)
+//   .then(credentials => {
+//       alert('User Created. Waiting for Redirect')
+//       let userId = credentials.user.uid
 
-      // SAVING THE USER CREDENTIALS TO FIREBASE
-      set(ref(db, 'newUser/' + userId), {
-          FirstName : firstNameInput,
-          LastName : lastNameInput,
-          Username : usernameInput,
-          Email : email,
-          Date_Of_Birth : dateOfBirthInput,
-      })
-      .then(response => {
-          console.log(response);
+//       SAVING THE USER CREDENTIALS TO FIREBASE
+//       set(ref(db, 'newUser/' + userId), {
+//           FirstName : firstNameInput,
+//           LastName : lastNameInput,
+//           Username : usernameInput,
+//           Email : email,
+//           Date_Of_Birth : dateOfBirthInput,
+//       })
+//       .then(response => {
+//           console.log(response);
+//       })
+//       .catch(error => {
+//           alert(error)
+//           console.error(error);
+//       })
+
+//       REDIRECTING THE NEW USER TO THE PROFILE
+//       setTimeout(() => {
+//           window.location.href =  'chatPage.html'
+//       }, 3000);
+
+//       console.log(userId)
+//       console.log(credentials);
+//   })
+//   .catch(error => {
+//       alert(error)
+//       console.error('The error is ' + error.message);
+//   })
+// }
+
+// signUp.addEventListener('click', signUpNewUser)
+
+// CHECK IF USER ALREADY EXISTS
+
+// function checkPhoneExists(){
+
+// }
+
+import {get, child, query, orderByChild, equalTo} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+    const dbref = ref(db)
+
+
+    // function searchNumber(){
+    //   var phoneSearch = phoneNumberIn.value
+    //     console.log(phoneSearch)
+    //     const que = query(ref(db, 'newUser/'), orderByChild("phoneNumber"), equalTo(phoneSearch))
+    //     get(que)
+    //     .then(snapshot => {
+    //         if(snapshot.exists()){
+    //           alert('User Already exists. please change your number')
+    //         }else{
+    //             alert('User Not Found')
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error(error);
+    //     })
+    // }
+
+    function signUpNewUser(){
+      let firstNameInput = FirstnameIn.value
+      let lastNameInput = LastnameIn.value
+      let usernameInput = usernameIn.value
+      let email = EmailIn.value
+      var phoneNumber = phoneNumberIn.value
+      let password = PasswordIn.value
+
+      // CHECK IF PHONE NUMBER EXISTS ALREADY
+      const que = query(ref(db, 'newUser/'), orderByChild("phoneNumber"), equalTo(phoneNumber))
+      get(que)
+      .then(snapshot => {
+        if(snapshot.exists()){
+          // IF PHONE NUMBER EXISTS, ALERT THE CLIENT
+          alert('User Already exists. please change your number')
+            // console.log(snapshot.val());
+        }else{
+          createUserWithEmailAndPassword(auth, email, password)
+          .then(credentials => {
+            alert('User Created. Waiting for Redirect')
+            let userId = credentials.user.uid
+      
+            // SAVING THE USER CREDENTIALS TO FIREBASE
+            set(ref(db, 'newUser/' + userId), {
+                FirstName : firstNameInput,
+                LastName : lastNameInput,
+                Username : usernameInput,
+                Email : email,
+                phoneNumber : phoneNumber,
+            })
+            .then(response => {
+                console.log(response);
+            })
+            .catch(error => {
+                alert(error.message)
+                console.error(error);
+            })
+      
+            // REDIRECTING THE NEW USER TO THE PROFILE
+            setTimeout(() => {
+                window.location.href =  'chatPage.html'
+            }, 3000);
+      
+            console.log(userId)
+            // console.log(credentials);
+         })
+          .catch(error => {
+              alert(error)
+              console.error('The error is ' + error.message);
+          })     
+        }
       })
       .catch(error => {
-          alert(error)
           console.error(error);
       })
 
-      // REDIRECTING THE NEW USER TO THE PROFILE
-      setTimeout(() => {
-          window.location.href =  'chatPage.html'
-      }, 3000);
 
-      console.log(userId)
-      // console.log(credentials);
-  })
-  .catch(error => {
-      alert(error)
-      console.error('The error is ' + error.message);
-  })
-}
+    }
 
-signUp.addEventListener('click', signUpNewUser)
+    signUp.addEventListener('click', signUpNewUser)

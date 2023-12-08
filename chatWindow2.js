@@ -36,7 +36,7 @@ import {getAuth, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10
                             const profileImage = document.getElementById('profileImage');
                             const chatOwner = document.getElementById('chatOwner');
     
-                            const username = snapshot.val().username;
+                            const username = snapshot.val().Username;
                             localStorage.setItem('username', username);
     
                             chatOwner.textContent = username;

@@ -77,7 +77,7 @@ if (localStorage.getItem("sender")) {
           })
       }
       textArea.value = ''
-  
+        
   })
 
 // RECEIVING REALTIME FEEDBACK FROM THE DATABASE
